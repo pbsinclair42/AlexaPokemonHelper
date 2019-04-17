@@ -1,55 +1,23 @@
 # -*- coding: utf-8 -*-
 """Simple fact sample app."""
 
-import random
 import logging
+import random
 
-from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import (
     AbstractRequestHandler, AbstractExceptionHandler,
     AbstractRequestInterceptor, AbstractResponseInterceptor)
-from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
-
-from ask_sdk_model.ui import SimpleCard
+from ask_sdk_core.skill_builder import SkillBuilder
+from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_model import Response
 
-
-# =========================================================================================================================================
-# TODO: The items below this comment need your attention.
-# =========================================================================================================================================
-SKILL_NAME = "Space Facts"
-GET_FACT_MESSAGE = "Here's your fact: "
-HELP_MESSAGE = "You can say tell me a space fact, or, you can say exit... What can I help you with?"
+HELP_MESSAGE = "TODO"
 HELP_REPROMPT = "What can I help you with?"
 STOP_MESSAGE = "Goodbye!"
-FALLBACK_MESSAGE = "The Space Facts skill can't help you with that.  It can help you discover facts about space if you say tell me a space fact. What can I help you with?"
+FALLBACK_MESSAGE = "Sorry, I didn't understand"
 FALLBACK_REPROMPT = 'What can I help you with?'
-EXCEPTION_MESSAGE = "Sorry. I cannot help you with that."
-
-# =========================================================================================================================================
-# TODO: Replace this data with your own.  You can find translations of this data at http://github.com/alexa/skill-sample-python-fact/lambda/data
-# =========================================================================================================================================
-
-data = [
-  'A year on Mercury is just 88 days long.',
-  'Despite being farther from the Sun, Venus experiences higher temperatures than Mercury.',
-  'Venus rotates counter-clockwise, possibly because of a collision in the past with an asteroid.',
-  'On Mars, the Sun appears about half the size as it does on Earth.',
-  'Earth is the only planet not named after a god.',
-  'Jupiter has the shortest day of all the planets.',
-  'The Milky Way galaxy will collide with the Andromeda Galaxy in about 5 billion years.',
-  'The Sun contains 99.86% of the mass in the Solar System.',
-  'The Sun is an almost perfect sphere.',
-  'A total solar eclipse can happen once every 1 to 2 years. This makes them a rare event.',
-  'Saturn radiates two and a half times more energy into space than it receives from the sun.',
-  'The temperature inside the Sun can reach 15 million degrees Celsius.',
-  'The Moon is moving approximately 3.8 cm away from our planet every year.',
-]
-
-# =========================================================================================================================================
-# Editing anything below this line might break your skill.
-# =========================================================================================================================================
+EXCEPTION_MESSAGE = "Whoops, something went wrong"
 
 sb = SkillBuilder()
 logger = logging.getLogger(__name__)
@@ -59,25 +27,26 @@ logger.setLevel(logging.DEBUG)
 # Built-in Intent Handlers
 class GetNewFactHandler(AbstractRequestHandler):
     """Handler for Skill Launch and GetNewFact Intent."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_request_type("LaunchRequest")(handler_input) or
-                is_intent_name("GetNewSpaceFactIntent")(handler_input))
+                is_intent_name("GetNewFactIntent")(handler_input))
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         logger.info("In GetNewFactHandler")
 
-        random_fact = random.choice(data)
-        speech = GET_FACT_MESSAGE + random_fact
+        random_fact = "fact"
+        speech = "Here's your fact:" + random_fact
 
-        handler_input.response_builder.speak(speech).set_card(
-            SimpleCard(SKILL_NAME, random_fact))
+        handler_input.response_builder.speak(speech)
         return handler_input.response_builder.response
 
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.HelpIntent")(handler_input)
@@ -87,13 +56,13 @@ class HelpIntentHandler(AbstractRequestHandler):
         logger.info("In HelpIntentHandler")
 
         handler_input.response_builder.speak(HELP_MESSAGE).ask(
-            HELP_REPROMPT).set_card(SimpleCard(
-                SKILL_NAME, HELP_MESSAGE))
+            HELP_REPROMPT)
         return handler_input.response_builder.response
 
 
 class CancelOrStopIntentHandler(AbstractRequestHandler):
     """Single handler for Cancel and Stop Intent."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_intent_name("AMAZON.CancelIntent")(handler_input) or
@@ -114,6 +83,7 @@ class FallbackIntentHandler(AbstractRequestHandler):
     This handler will not be triggered except in that locale,
     so it is safe to deploy on any locale.
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.FallbackIntent")(handler_input)
@@ -129,6 +99,7 @@ class FallbackIntentHandler(AbstractRequestHandler):
 
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """Handler for Session End."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("SessionEndedRequest")(handler_input)
@@ -147,6 +118,7 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
     """Catch all exception handler, log exception and
     respond with custom message.
     """
+
     def can_handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> bool
         return True
@@ -165,6 +137,7 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 # Request and Response loggers
 class RequestLogger(AbstractRequestInterceptor):
     """Log the alexa requests."""
+
     def process(self, handler_input):
         # type: (HandlerInput) -> None
         logger.debug("Alexa Request: {}".format(
@@ -173,6 +146,7 @@ class RequestLogger(AbstractRequestInterceptor):
 
 class ResponseLogger(AbstractResponseInterceptor):
     """Log the alexa responses."""
+
     def process(self, handler_input, response):
         # type: (HandlerInput, Response) -> None
         logger.debug("Alexa Response: {}".format(response))
