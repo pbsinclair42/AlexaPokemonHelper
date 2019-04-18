@@ -7,7 +7,9 @@
           "examplePhrases": [
             "Alexa open pokemon helper",
             "Alexa ask pokemon helper what types Charizard is weak to",
-            "Alexa ask pokemon helper what types Charizard resists"
+            "Alexa ask pokemon helper what types Charizard resists",
+            "Alexa ask pokemon helper what stats Charizard has",
+            "Alexa ask pokemon helper what abilities Charizard has"
           ],
           "keywords": [
             "space",

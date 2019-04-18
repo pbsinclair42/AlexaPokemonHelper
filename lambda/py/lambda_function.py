@@ -10,7 +10,7 @@ from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_model import Response
 
-from pokemon_helper import get_type_effectiveness_for_pokemon, get_abilities_for_pokemon
+from pokemon_helper import get_type_effectiveness_for_pokemon, get_abilities_for_pokemon, get_stats_for_pokemon
 from utils import list_to_speech
 
 WELCOME_MESSAGE = "Welcome!"
@@ -98,6 +98,24 @@ class PokemonAbilityHandler(AbstractRequestHandler):
         pokemon = handler_input.request_envelope.request.intent.slots["pokemon"].value
         abilities = get_abilities_for_pokemon(pokemon)
         speech = pokemon + "'s possible abilities are: " + list_to_speech([ability['name'] + ": " + ability['description'] for ability in abilities])
+
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
+
+
+class PokemonStatsHandler(AbstractRequestHandler):
+    """Handler for Skill Launch and GetNewFact Intent."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("PokemonStatsIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In PokemonStatsHandler")
+        pokemon = handler_input.request_envelope.request.intent.slots["pokemon"].value
+        stats = get_stats_for_pokemon(pokemon)
+        speech = pokemon + "'s has " + list_to_speech([str(stat['value']) + " " + stat['name'] for stat in stats])
 
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
@@ -215,6 +233,7 @@ class ResponseLogger(AbstractResponseInterceptor):
 sb.add_request_handler(PokemonWeaknessesHandler())
 sb.add_request_handler(PokemonResistancesHandler())
 sb.add_request_handler(PokemonAbilityHandler())
+sb.add_request_handler(PokemonStatsHandler())
 sb.add_request_handler(LaunchHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())

@@ -69,6 +69,33 @@
               "type": "POKEMON"
             }
           ]
+        },
+        {
+          "name": "PokemonStatsIntent",
+          "samples": [
+            "what {pokemon} stats are",
+            "what stats does {pokemon} have",
+            "what stats {pokemon} have",
+            "what's {pokemon} stats",
+            "what {pokemon} stats are",
+            "what stats does {pokemon} have",
+            "what stats {pokemon} has",
+            "what's {pokemon} stats",
+            "what {pokemon} statistics are",
+            "what statistics does {pokemon} have",
+            "what statistics {pokemon} have",
+            "what's {pokemon} statistics",
+            "what {pokemon} statistics are",
+            "what statistics does {pokemon} have",
+            "what statistics {pokemon} has",
+            "what's {pokemon} statistics"
+          ],
+          "slots": [
+            {
+              "name": "pokemon",
+              "type": "POKEMON"
+            }
+          ]
         }
       ],
       "types": [

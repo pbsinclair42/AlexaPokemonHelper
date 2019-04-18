@@ -66,3 +66,9 @@ def get_abilities_for_pokemon(pokemon):
     pokemon_data = get_pokemon_data(pokemon)
     abilities = list(map(lambda x: get_ability_data(x['ability']['name']), pokemon_data['abilities']))
     return [{"name": ability['name'], "description": ability['effect_entries'][0]['short_effect']} for ability in abilities]
+
+
+def get_stats_for_pokemon(pokemon):
+    stats = [{"name": stat['stat']['name'], "value": stat['base_stat']} for stat in get_pokemon_data(pokemon)['stats']]
+    stats.reverse()
+    return stats
