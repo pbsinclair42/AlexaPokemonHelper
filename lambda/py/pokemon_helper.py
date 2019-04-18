@@ -9,8 +9,12 @@ all_types.remove("shadow")
 
 
 def get_types(pokemon):
-    pokemon_data = json.loads(requests.get("https://pokeapi.co/api/v2/pokemon/" + pokemon).content)
+    pokemon_data = get_pokemon_data(pokemon)
     return list(map(lambda x: x["type"]["name"], pokemon_data["types"]))
+
+
+def get_pokemon_data(pokemon):
+    return json.loads(requests.get("https://pokeapi.co/api/v2/pokemon/" + pokemon).content)
 
 
 def get_type_effectiveness_for_type(type):
@@ -52,3 +56,13 @@ def get_type_effectiveness_for_pokemon(pokemon):
         else:
             neutral.append(t)
     return {"weaknesses": weaknesses, "resistances": resistances, "immunities": immunities, "neutral": neutral}
+
+
+def get_ability_data(ability):
+    return json.loads(requests.get("https://pokeapi.co/api/v2/ability/" + ability).content)
+
+
+def get_abilities_for_pokemon(pokemon):
+    pokemon_data = get_pokemon_data(pokemon)
+    abilities = list(map(lambda x: get_ability_data(x['ability']['name']), pokemon_data['abilities']))
+    return [{"name": ability['name'], "description": ability['effect_entries'][0]['short_effect']} for ability in abilities]

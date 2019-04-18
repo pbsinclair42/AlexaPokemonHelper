@@ -50,6 +50,25 @@
               "type": "POKEMON"
             }
           ]
+        },
+        {
+          "name": "PokemonAbilityIntent",
+          "samples": [
+            "what {pokemon} abilities are",
+            "what abilities does {pokemon} have",
+            "what abilities {pokemon} have",
+            "what's {pokemon} abilities",
+            "what {pokemon} ability is",
+            "what ability does {pokemon} have",
+            "what ability {pokemon} has",
+            "what's {pokemon} ability"
+          ],
+          "slots": [
+            {
+              "name": "pokemon",
+              "type": "POKEMON"
+            }
+          ]
         }
       ],
       "types": [
