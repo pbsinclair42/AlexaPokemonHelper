@@ -3,11 +3,10 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "summary": "Learn fun facts about space.",
+          "summary": "Ask Alexa questions about pokemon",
           "examplePhrases": [
-            "Alexa open space facts",
-            "Alexa ask space facts for a fact",
-            "Alexa tell space facts to tell me trivia"
+            "Alexa open pokemon helper",
+            "Alexa ask pokemon helper what types Charizard is weak to"
           ],
           "keywords": [
             "space",

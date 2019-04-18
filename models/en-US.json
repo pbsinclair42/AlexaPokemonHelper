@@ -20,24 +20,20 @@
           "samples": []
         },
         {
-          "name": "GetNewFactIntent",
+          "name": "WeaknessIntent",
           "samples": [
-            "a fact",
-            "a space fact",
-            "tell me a fact",
-            "tell me a space fact",
-            "give me a fact",
-            "give me a space fact",
-            "tell me trivia",
-            "tell me a space trivia",
-            "give me trivia",
-            "give me a space trivia",
-            "give me some information",
-            "give me some space information",
-            "tell me something",
-            "give me something"
+            "what types {pokemon} is weak to",
+            "what types {pokemon} are weak to",
+            "what types is {pokemon} weak to",
+            "what types are {pokemon} weak to",
+            "what {pokemon} is weak to"
           ],
-          "slots": []
+          "slots": [
+            {
+              "name": "pokemon",
+              "type": "POKEMON"
+            }
+          ]
         }
       ],
       "types": [
