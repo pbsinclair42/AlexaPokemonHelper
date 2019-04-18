@@ -20,13 +20,29 @@
           "samples": []
         },
         {
-          "name": "WeaknessIntent",
+          "name": "PokemonWeaknessesIntent",
           "samples": [
             "what types {pokemon} is weak to",
             "what types {pokemon} are weak to",
             "what types is {pokemon} weak to",
             "what types are {pokemon} weak to",
+            "what is {pokemon} weak to",
             "what {pokemon} is weak to"
+          ],
+          "slots": [
+            {
+              "name": "pokemon",
+              "type": "POKEMON"
+            }
+          ]
+        },
+        {
+          "name": "PokemonResistancesIntent",
+          "samples": [
+            "what types {pokemon} resists",
+            "what {pokemon} resists",
+            "what types does {pokemon} resist",
+            "what {pokemon} resists"
           ],
           "slots": [
             {

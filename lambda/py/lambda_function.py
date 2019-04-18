@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Simple fact sample app."""
-import datetime
 import logging
 
 from ask_sdk_core.dispatch_components import (
@@ -11,7 +10,7 @@ from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_model import Response
 
-from pokemon_helper import get_weaknesses_for_pokemon
+from pokemon_helper import get_type_effectiveness_for_pokemon
 from utils import list_to_speech
 
 WELCOME_MESSAGE = "Welcome!"
@@ -43,22 +42,44 @@ class LaunchHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
-class WeaknessHandler(AbstractRequestHandler):
+class PokemonWeaknessesHandler(AbstractRequestHandler):
     """Handler for Skill Launch and GetNewFact Intent."""
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name("WeaknessIntent")(handler_input)
+        return is_intent_name("PokemonWeaknessesIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In WeaknessHandler")
+        logger.info("In PokemonWeaknessesHandler")
         pokemon = handler_input.request_envelope.request.intent.slots["pokemon"].value
-        weaknesses = get_weaknesses_for_pokemon(pokemon)
+        weaknesses = get_type_effectiveness_for_pokemon(pokemon)["weaknesses"]
         if len(weaknesses.keys()) == 0:
             speech = pokemon + " has no weaknesses"
         else:
             speech = pokemon + " is " + list_to_speech(list(map(lambda x: str(x[0]) + " times weak to " + list_to_speech(x[1]), weaknesses.items())))
+
+        handler_input.response_builder.speak(speech)
+        return handler_input.response_builder.response
+
+
+class PokemonResistancesHandler(AbstractRequestHandler):
+    """Handler for Skill Launch and GetNewFact Intent."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("PokemonResistancesIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In PokemonResistancesHandler")
+        pokemon = handler_input.request_envelope.request.intent.slots["pokemon"].value
+        weaknesses = get_type_effectiveness_for_pokemon(pokemon)["resistances"]
+        if len(weaknesses.keys()) == 0:
+            speech = pokemon + " has no resistances"
+        else:
+            speech = pokemon + " is " + list_to_speech(
+                list(map(lambda x: str(x[0]) + " times resistant to " + list_to_speech(x[1]), weaknesses.items())))
 
         handler_input.response_builder.speak(speech)
         return handler_input.response_builder.response
@@ -173,7 +194,8 @@ class ResponseLogger(AbstractResponseInterceptor):
 
 
 # Register intent handlers
-sb.add_request_handler(WeaknessHandler())
+sb.add_request_handler(PokemonWeaknessesHandler())
+sb.add_request_handler(PokemonResistancesHandler())
 sb.add_request_handler(LaunchHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())

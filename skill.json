@@ -6,7 +6,8 @@
           "summary": "Ask Alexa questions about pokemon",
           "examplePhrases": [
             "Alexa open pokemon helper",
-            "Alexa ask pokemon helper what types Charizard is weak to"
+            "Alexa ask pokemon helper what types Charizard is weak to",
+            "Alexa ask pokemon helper what types Charizard resists"
           ],
           "keywords": [
             "space",
@@ -14,7 +15,7 @@
             "trivia"
           ],
           "name": "pokemon-helper",
-          "description": "Ask for Space Facts, and learn about what really matters, like dark matter.\n\nSpace Facts provides fun the whole family can enjoy and is guaranteed to make you smarter.\n\nTo start, just say \"Alexa, launch Space Facts\" or \"Alexa, open Space Facts\" to get a fact\".\n\nAt anytime, you can stop by saying \"Alexa, stop\""
+          "description": "Ask Alexa questions about pokemon"
         }
       },
       "category": "KNOWLEDGE_AND_TRIVIA"

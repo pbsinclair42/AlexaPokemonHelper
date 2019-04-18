@@ -46,13 +46,9 @@ def get_type_effectiveness_for_pokemon(pokemon):
         if m == 0:
             immunities.append(t)
         elif m < 1:
-            resistances[1 / m].append(t)
+            resistances[int(1 / m)].append(t)
         elif m > 1:
             weaknesses[m].append(t)
         else:
             neutral.append(t)
     return {"weaknesses": weaknesses, "resistances": resistances, "immunities": immunities, "neutral": neutral}
-
-
-def get_weaknesses_for_pokemon(pokemon):
-    return get_type_effectiveness_for_pokemon(pokemon)["weaknesses"]
